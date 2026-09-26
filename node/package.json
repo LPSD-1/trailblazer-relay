@@ -1,0 +1,17 @@
+{
+  "name": "trailblazer-relay-node",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Trail Blazer group ride relay (protocol v1) as a single-file Node server.",
+  "license": "MIT",
+  "main": "relay.js",
+  "scripts": {
+    "start": "node relay.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.21.3"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "trailblazer-relay-repo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Relay for Trail Blazer group ride tracking: a Cloudflare Worker, a Node server, and a conformance checker.",
+  "license": "MIT",
+  "workspaces": [
+    "checker",
+    "node",
+    "worker"
+  ],
+  "scripts": {
+    "test": "node test/run.js node worker",
+    "test:node": "node test/run.js node",
+    "test:worker": "node test/run.js worker",
+    "test:checker-can-fail": "node test/checker-can-fail.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

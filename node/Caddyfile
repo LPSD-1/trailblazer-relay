@@ -1,0 +1,7 @@
+# Replace relay.example.com with your own domain name. Caddy fetches and renews
+# the HTTPS certificate itself; WebSockets pass through reverse_proxy unchanged.
+relay.example.com {
+	reverse_proxy relay:8080
+	# Access logs are off by default in Caddy; keep them off. Nothing in them
+	# would be a frame, but there is no reason to keep who-connected-when.
+}

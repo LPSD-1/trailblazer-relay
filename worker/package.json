@@ -1,0 +1,14 @@
+{
+  "name": "trailblazer-relay-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Trail Blazer group ride relay (protocol v1) as a Cloudflare Worker with one Durable Object per room.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.141.0"
+  }
+}

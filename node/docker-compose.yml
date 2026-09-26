@@ -1,0 +1,31 @@
+# The relay plus Caddy, which gets a free HTTPS certificate automatically and
+# turns wss://relay.example.com into ws://relay:8080 inside this compose network.
+#
+# Before `docker compose up -d`:
+#   1. Point a domain name at this machine (an A record), and open ports 80 and 443.
+#   2. Put that name in Caddyfile in place of relay.example.com.
+#   3. Create a file named .env next to this one containing:  RELAY_TOKEN=<your token>
+services:
+  relay:
+    build: .
+    restart: unless-stopped
+    environment:
+      RELAY_TOKEN: ${RELAY_TOKEN:?Set RELAY_TOKEN in .env - see the README}
+    # No ports published: only Caddy can reach it.
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - relay
+
+volumes:
+  caddy_data:
+  caddy_config:

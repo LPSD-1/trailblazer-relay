@@ -1,0 +1,23 @@
+# Trail Blazer relay - Cloudflare Worker configuration.
+# Deploy with `npx wrangler deploy`, then set the access token with
+# `npx wrangler secret put RELAY_TOKEN` (see the README).
+name = "trailblazer-relay"
+main = "src/index.js"
+# 2026-04-07 or later: the runtime answers WebSocket close frames itself
+# (web_socket_auto_reply_to_close), so src/index.js need not.
+compatibility_date = "2026-09-01"
+
+# Never keep request logs for this Worker. Frames are never logged by the code
+# either, but this also keeps connection metadata out of Workers Logs.
+[observability]
+enabled = false
+
+[[durable_objects.bindings]]
+name = "ROOMS"
+class_name = "Room"
+
+# The free plan only offers SQLite-backed Durable Objects. The relay never
+# writes to that storage; it is declared only because the plan requires it.
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Room"]

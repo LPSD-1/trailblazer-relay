@@ -1,0 +1,23 @@
+{
+  "name": "trailblazer-relay-check",
+  "version": "1.0.0",
+  "description": "Conformance checker for Trail Blazer group ride relays (protocol v1).",
+  "license": "MIT",
+  "bin": {
+    "trailblazer-relay-check": "check.js"
+  },
+  "files": [
+    "check.js"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LPSD-1/trailblazer-relay.git",
+    "directory": "checker"
+  },
+  "dependencies": {
+    "ws": "^8.21.3"
+  }
+}
