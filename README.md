@@ -4,6 +4,9 @@ A small, free server that lets a group of riders using the Trail Blazer app see
 each other on the map **when they are too far apart for their phones to reach
 each other directly**.
 
+> **Status:** group ride is being added to the Trail Blazer app now. This relay
+> is ready for it; the app screens this guide mentions arrive with that update.
+
 You do not need this to use group ride. Phones in a group already share
 positions phone to phone over Bluetooth and Wi-Fi, passing them along the group.
 A relay adds one thing: riders who are out of radio range of everyone else
