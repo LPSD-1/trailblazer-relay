@@ -70,6 +70,10 @@ const server = http.createServer((req, res) => {
 const wss = new WebSocketServer({ noServer: true, maxPayload: 64 * 1024 });
 
 server.on('upgrade', (req, socket, head) => {
+  // A peer can reset the connection at any moment, even while the 404 below is
+  // being written. An 'error' with no listener would crash the whole relay, so
+  // every raw upgrade socket gets one before anything is written to it.
+  socket.on('error', () => { /* the socket is destroyed; nothing to tidy */ });
   const m = /^\/v1\/room\/([A-Za-z0-9_-]{22})$/.exec(req.url || '');
   if (!m || !isToken(m[1])) { // a roomId has the same shape as a token: 16 bytes, base64url
     socket.end('HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 0\r\n\r\n');
@@ -79,6 +83,9 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 function join(ws, roomId) {
+  // Before any early return: a socket closed as room-full can still deliver a
+  // malformed frame, and an 'error' with no listener would crash the relay.
+  ws.on('error', () => { /* the close handler, if any, tidies up */ });
   const s = { authed: false, tokens: BURST, at: Date.now(), alive: true };
   ws.tb = s; // per-socket state: auth, rate-limit bucket, liveness
   let room = rooms.get(roomId);
@@ -140,7 +147,6 @@ function join(ws, roomId) {
     if (!anyAuthed) room.frames = [];
     if (room.sockets.size === 0) rooms.delete(roomId);
   });
-  ws.on('error', () => { /* the close handler tidies up */ });
 }
 
 // Drop connections whose phone vanished without closing (tunnel, battery).
