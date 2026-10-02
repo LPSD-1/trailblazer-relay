@@ -114,9 +114,10 @@ After `ok 1`, the client sends **binary** frames only.
 - The relay never sends a text frame except `ok 1`. A v1 client SHOULD ignore
   any other text frame, so a later minor revision can add messages.
 
-Today's app frames are at most 84 bytes (a version byte, a hop count, a 12-byte
-nonce, AES-256-GCM ciphertext and a 16-byte tag), but a relay MUST NOT depend
-on that or on any other structure: treat every frame as opaque bytes.
+Today's app frames are at most 256 bytes; plan parts are 246 and positions 84
+(a version byte, a hop count, a 12-byte nonce, AES-256-GCM ciphertext and a
+16-byte tag), but a relay MUST NOT depend on that or on any other structure:
+treat every frame as opaque bytes.
 
 ## 5. Catch-up
 
